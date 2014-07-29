@@ -1,5 +1,5 @@
-var productList = []; //Local Array for products 
-var searchBarID = "#project"; // ID name of search bar autocomplete is to use.
+var productList = [];
+var searchBarID = "#ctl00_txtProductSearchName"; // ID name of search bar autocomplete is to use.
 
 $(function() {
   var e5Data = "http://e5webservices.onthehub.com/data/v1/institutions/46817193-1960-4ce3-925c-8556e8dc7b93/webstores?callback=?";
@@ -28,34 +28,35 @@ $(function() {
     }
   })
   .data("ui-autocomplete")._renderItem = function( ul, item ) { //JQuery Autocomplete code. Renders the suggested list of products.    
-        ul.addClass("smartSearch"); //Adds class to keep styling seperate.
+        ul.addClass("smartSearch");//Adds class to smartSearch to differentiate Styling
         return $( "<li class='smartSearchResult'>" )
         .data("ui-autocomplete-item", item)
         .append("<a href='" + item.prodHref + "&srch=" + item.label + "'><div class='resultWrap'><div id='resultTitle'>" + item.label + "</div><div id='resultByline'>" + item.desc + "</div></div></a>" )
         .appendTo( ul );
   };
-  $(".ui-autocomplete").removeClass("ui-corner-all"); //Removes rounded corners applied by jQuery UI as default.
+  $(".ui-autocomplete").removeClass("ui-corner-all");//Removes rounded corners that jQuery adds by default
 
 });
 
 //Adds CSS styles for Smart Search
 var smartStyle = document.createElement('style');
 smartStyle.type = 'text/css';
-head = document.head;
+head = document.getElementsByTagName('head')[0];
 
-//Smart Search Box Styles
-var styles = ".smartSearch{ border: 2px solid #efefef; border-top: none; padding-left:2px; width: 224px; max-height:300px; overflow-y:scroll; overflow-x:hidden;} .smartSearch .ui-menu-item a {padding:0; line-height:initial;} .ui-menu .smartSearchResult { padding: 0 ;} .ui-menu .smartSearchResult .resultWrap{ padding: 10px 10px 10px 10px;} .smartSearchResult a{ text-decoration: none;} .smartSearchResult #resultTitle{ font-size: 10pt; font-weight: bold;}";
-styles += ".smartSearchResult #resultByline{ font-size: 8pt; color: #949494; } .smartSearchResult a.ui-state-focus { border:none; } .smartSearchResult .ui-state-focus .resultWrap {  border:none; background: #0F699E; } .smartSearchResult .ui-state-focus .resultWrap div{ background:none; color: #ffffff !important;}";
+//Smart Search Styles
+var styles = ".smartSearch{ border: 2px solid #efefef; border-top: none; padding-left:2px; width: 215px; max-height:300px; overflow-y:scroll; overflow-x:hidden;} .smartSearch .ui-menu-item a {padding:0; line-height: initial} .smartSearch .smartSearchResult { padding: 0 ;} .smartSearch .smartSearchResult .resultWrap{ padding: 10px 10px 10px 10px;} .smartSearchResult a{ text-decoration: none;} .smartSearchResult #resultTitle{ font-size: 10pt; font-weight: bold;}";
+styles += ".smartSearchResult #resultByline{ font-size: 8pt; color: #949494; } .smartSearchResult a.ui-state-focus { border:none; padding: 0; } .smartSearchResult .ui-state-focus .resultWrap { background: #0F699E; border:none; } .smartSearchResult .ui-state-focus .resultWrap div{background:none; color: #ffffff !important;}";
 
-//Search Bar Styling to Fix Positioning Issues
-styles += ".SearchImageButton{ position:absolute; padding:4px; top:4px; right:8px;} .SearchTextBox{ padding: 5px 10px 5px 10px; margin:0; border: 2px solid #efefef;} .SearchPanel{height:initial;padding: 0 !important;border: none;}";
+//Search bar CSS to fix positioning problems
+styles += ".SearchImageButton{ position:absolute !important; padding:4px !important; top:4px !important; right:8px !important;} .SearchTextBox{padding: 5px 10px 5px 10px !important;margin:0 !important;border: 2px solid #efefef !important;} .SearchPanel{height:initial !important;padding: 0 !important;border: none !important;}";
 
-//Appending Stylesheet to Document
+//for IE
 if(smartStyle.styleSheet){
-  style.styleSheet.cssText = styles;
+  smartStyle.styleSheet.cssText = styles;
 }
 else{
   smartStyle.appendChild(document.createTextNode(styles));
 }
 
+//Appends CSS to head
 head.appendChild(smartStyle);
