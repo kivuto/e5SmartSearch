@@ -70,10 +70,15 @@
 	        }
       	})
 	  	.data("ui-autocomplete")._renderItem = function( ul, item ) { //JQuery Autocomplete code. Renders the suggested list of products.    
-	        	ul.addClass("smartSearch");//Adds class to smartSearch to differentiate Styling
-	        	return $( "<li class='smartSearchResult'>" )
+        	
+        	ul.addClass("smartSearch");//Adds class to smartSearch to differentiate Styling
+		        
+	        //HTML Result Block. Leverages title, description, price and image blocks and combines them for output.
+        	var resultTemplate = "<a href='" + item.prodHref + "&srch=" + item.label + "'><div class='resultWrap'><div class='resultTitle'>" + item.label + "</div><div class='resultByline'>" + item.desc + "</div></div></a>" ;
+        	
+        	return $( "<li class='smartSearchResult'>" )
 		        .data("ui-autocomplete-item", item)
-		        .append("<a href='" + item.prodHref + "&srch=" + item.label + "'><div class='resultWrap'><div id='resultTitle'>" + item.label + "</div><div id='resultByline'>" + item.desc + "</div></div></a>" )
+		        .append( resultTemplate )
 		        .appendTo( ul );
 	  	};
       	$(".ui-autocomplete").removeClass("ui-corner-all");//Removes rounded corners that jQuery adds by default
@@ -86,8 +91,8 @@
     head = document.getElementsByTagName('head')[0];
 
     //Smart Search Styles
-    var styles = ".smartSearch{ border: 2px solid #efefef; border-top: none; padding-left:2px; width: 215px; max-height:300px; overflow-y:scroll; overflow-x:hidden;} .smartSearch .ui-menu-item a {padding:0; line-height: initial} .smartSearch .smartSearchResult { padding: 0 ;} .smartSearch .smartSearchResult .resultWrap{ padding: 10px 10px 10px 10px;} .smartSearchResult a{ text-decoration: none;} .smartSearchResult #resultTitle{ font-size: 10pt; font-weight: bold;}";
-    styles += ".smartSearchResult #resultByline{ font-size: 8pt; color: #949494; } .smartSearchResult a.ui-state-focus { border:none; padding: 0; } .smartSearchResult .ui-state-focus .resultWrap { background: #0F699E; border:none; } .smartSearchResult .ui-state-focus .resultWrap div{background:none; color: #ffffff !important;}";
+    var styles = ".smartSearch{ border: 2px solid #efefef; border-top: none; padding-left:2px; width: 215px; max-height:300px; overflow-y:scroll; overflow-x:hidden;} .smartSearch .ui-menu-item a {padding:0; line-height: initial} .smartSearch .smartSearchResult { padding: 0 ;} .smartSearch .smartSearchResult .resultWrap{ padding: 10px 10px 10px 10px;} .smartSearchResult a{ text-decoration: none;} .smartSearchResult .resultTitle{ font-size: 10pt; font-weight: bold;}";
+    styles += ".smartSearchResult .resultByline{ font-size: 8pt; color: #949494; } .smartSearchResult a.ui-state-focus { border:none; padding: 0; } .smartSearchResult .ui-state-focus .resultWrap { background: #0F699E; border:none; } .smartSearchResult .ui-state-focus .resultWrap div{background:none; color: #ffffff !important;}";
 
     //Search bar CSS to fix positioning problems
     styles += ".SearchImageButton{ position:absolute !important; padding:4px !important; top:4px !important; right:8px !important;} .SearchTextBox{padding: 5px 10px 5px 10px !important;margin:0 !important;border: 2px solid #efefef !important;} .SearchPanel{height:initial !important;padding: 0 !important;border: none !important;}";

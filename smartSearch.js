@@ -62,11 +62,16 @@ $(function() {
     }
   })
   .data("ui-autocomplete")._renderItem = function( ul, item ) { //JQuery Autocomplete code. Renders the suggested list of products.    
+          
     ul.addClass("smartSearch");//Adds class to smartSearch to differentiate Styling
+      
+    //HTML Result Block. Leverages title, description, price and image blocks and combines them for output.
+    var resultTemplate = "<a href='" + item.prodHref + "&srch=" + item.label + "'><div class='resultWrap'><div class='resultTitle'>" + item.label + "</div><div class='resultByline'>" + item.desc + "</div></div></a>" ;
+    
     return $( "<li class='smartSearchResult'>" )
-    .data("ui-autocomplete-item", item)
-    .append("<a href='" + item.prodHref + "&srch=" + item.label + "'><div class='resultWrap'><div id='resultTitle'>" + item.label + "</div><div id='resultByline'>" + item.desc + "</div></div></a>" )
-    .appendTo( ul );
+      .data("ui-autocomplete-item", item)
+      .append( resultTemplate )
+      .appendTo( ul );
   };
   $(".ui-autocomplete").removeClass("ui-corner-all");//Removes rounded corners that jQuery adds by default
 });
